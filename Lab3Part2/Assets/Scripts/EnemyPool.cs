@@ -17,9 +17,15 @@ public class EnemyPool : MonoBehaviour
         maxEnemies = enemies.Length;
         for (int i = 0; i < maxEnemies; i++)
         {
+            if (i % 5 == 0 && i > 1)
+            {
+                spawnPos.z += 1.5f;
+                spawnPos.x = 0.0f;
+            }
             enemies[i] = Instantiate(enemyPrefab, spawnPos, enemyPrefab.transform.rotation, transform);
             enemies[i].SetActive(false);
-            spawnPos.x += 1.5f;
+
+            spawnPos.x += 2.0f;
         }
 
         NewWave();

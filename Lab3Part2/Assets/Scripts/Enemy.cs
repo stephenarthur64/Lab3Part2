@@ -8,6 +8,9 @@ public class Enemy : MonoBehaviour
     Vector3 velocity;
     public float speed;
 
+    public const float LIMIT_RIGHT = 15.0f;
+    public const float LIMIT_LEFT = -15.0f;
+
     public CharacterController controller;
 
     // Start is called before the first frame update
@@ -17,7 +20,8 @@ public class Enemy : MonoBehaviour
         controller = GetComponent<CharacterController>();
         velocity = new Vector3(speed, 0.0f, 0.0f);
 
-        EnemyManager.changeDirectionLeft.AddListener(ChangeMoveDirection);
+        EnemyManager.changeDirectionLeft.AddListener(ChangeMoveDirectionLeft);
+        EnemyManager.changeDirectionRight.AddListener(ChangeMoveDirectionRight);
     }
 
     // Update is called once per frame
@@ -26,24 +30,31 @@ public class Enemy : MonoBehaviour
         Move();
     }
 
+    private void LateUpdate()
+    {
+        if (transform.position.x <= LIMIT_LEFT)
+        {
+            EnemyManager.changeDirectionRight.Invoke();
+        }
+        else if (transform.position.x >= LIMIT_RIGHT)
+        {
+            EnemyManager.changeDirectionLeft.Invoke();
+        }
+    }
+
     void Move()
     {
-        if (transform.position.x < -10)
-        {
-            transform.position = new Vector3(10.0f, transform.position.y, transform.position.z);
-            EnemyManager.changeDirectionLeft.Invoke();
-        }
-        else if (transform.position.x > 10)
-        {
-            transform.position = new Vector3(-10.0f, transform.position.y, transform.position.z);
-            EnemyManager.changeDirectionLeft.Invoke();
-        }
-
         controller.Move(velocity);
         velocity.z = 0.0f;
     }
-    void ChangeMoveDirection()
+    void ChangeMoveDirectionLeft()
     {
-        velocity.x = velocity.x * -1;
+        velocity.z = -1.0f;
+        velocity.x = -speed;
+    }
+    void ChangeMoveDirectionRight()
+    {
+        velocity.z = -1.0f;
+        velocity.x = speed;
     }
 }
