@@ -28,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
         inputActionMap.FindAction("Move").started += OnMove;
         inputActionMap.FindAction("Move").canceled += StopMoving;
 
-        inputActionMap.FindAction("Fire").performed += Shoot;
+        inputActionMap.FindAction("Fire").started += Shoot;
     }
 
     void OnMove(InputAction.CallbackContext ctx)
@@ -50,6 +50,6 @@ public class PlayerMovement : MonoBehaviour
 
     void Shoot(InputAction.CallbackContext ctx)
     {
-        bulletPool.Spawn(bulletType, transform);
+        bulletPool.Spawn(bulletType, firePos);
     }
 }

@@ -8,24 +8,32 @@ public class Bullet : MonoBehaviour
     BulletSO stats;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         rb = GetComponent<Rigidbody>();
     }
 
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        
+        rb.velocity = stats.speed * Time.deltaTime * transform.forward;
     }
+
     public void Spawn(BulletSO t_stats, Transform t_spawnTransform)
     {
         stats = t_stats;
-        rb.velocity = transform.forward * stats.speed * Time.deltaTime;
+        transform.SetPositionAndRotation(t_spawnTransform.position, t_spawnTransform.rotation);
+        transform.forward = t_spawnTransform.forward;
 
-        transform.position = t_spawnTransform.position;
-        transform.rotation = t_spawnTransform.rotation;
         gameObject.SetActive(true);
+        StartCoroutine(Decay());
+    }
+
+    IEnumerator Decay()
+    {
+        yield return new WaitForSeconds(5);
+
+        gameObject.SetActive(false);
     }
 }
