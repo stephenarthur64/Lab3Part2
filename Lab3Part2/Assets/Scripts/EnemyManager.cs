@@ -15,6 +15,11 @@ public class EnemyManager : MonoBehaviour
         {
             changeDirectionLeft = new UnityEvent();
         }
+
+        if (changeDirectionRight == null)
+        {
+            changeDirectionRight = new UnityEvent();
+        }
     }
 
     // Update is called once per frame
