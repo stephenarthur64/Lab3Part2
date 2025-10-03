@@ -11,18 +11,24 @@ public class PlayerMovement : MonoBehaviour
     private CharacterController character;
 
     [SerializeField] private InputActionAsset controls;
-
     private InputActionMap inputActionMap;
 
+    // Firing
+    private BulletPool bulletPool;
+    public Transform firePos;
+    public BulletSO bulletType;
 
     // Start is called before the first frame update
     void Start()
     {
         character = GetComponent<CharacterController>();
+        bulletPool = GetComponent<BulletPool>();
 
         inputActionMap = controls.FindActionMap("Player");
         inputActionMap.FindAction("Move").started += OnMove;
         inputActionMap.FindAction("Move").canceled += StopMoving;
+
+        inputActionMap.FindAction("Fire").performed += Shoot;
     }
 
     void OnMove(InputAction.CallbackContext ctx)
@@ -40,5 +46,10 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         character.Move(velocity);
+    }
+
+    void Shoot(InputAction.CallbackContext ctx)
+    {
+        bulletPool.Spawn(bulletType, transform);
     }
 }
