@@ -5,21 +5,40 @@ using UnityEngine;
 public class EnemyPool : MonoBehaviour
 {
     public GameObject enemyPrefab;
-    private const int MAX_ENEMIES = 15;
-    GameObject[] enemies = new GameObject[MAX_ENEMIES];
+    private int maxEnemies;
+    [SerializeField]
+    GameObject[] enemies = new GameObject[1];
 
     // Start is called before the first frame update
     void Start()
     {
-        foreach (GameObject enemy in enemies)
+        Vector3 spawnPos = new Vector3(0.0f, 0.0f, 0.0f);
+
+        maxEnemies = enemies.Length;
+        for (int i = 0; i < maxEnemies; i++)
         {
-            Instantiate(enemyPrefab, new Vector3(0, 0, 0), enemyPrefab.transform.rotation);
+            enemies[i] = Instantiate(enemyPrefab, spawnPos, enemyPrefab.transform.rotation, transform);
+            enemies[i].SetActive(false);
+            spawnPos.x += 1.5f;
         }
+
+        NewWave();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+    }
+
+    void NewWave()
+    {
+        Vector3 newPosition = new Vector3(0, 0, 0);
+
+        foreach(GameObject enemy in enemies)
+        {
+            enemy.SetActive(true);
+            //enemy.transform.position = newPosition;
+            //newPosition.z++;
+        }
     }
 }
