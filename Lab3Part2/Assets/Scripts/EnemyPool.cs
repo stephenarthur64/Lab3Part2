@@ -1,13 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyPool : MonoBehaviour
 {
+    public EnemySO blockAI;
+
     public GameObject enemyPrefab;
     private int maxEnemies;
     [SerializeField]
     GameObject[] enemies = new GameObject[1];
+
+    public GameObject CircleTarget;
 
     // Start is called before the first frame update
     void Start()
@@ -42,6 +47,7 @@ public class EnemyPool : MonoBehaviour
 
         foreach(GameObject enemy in enemies)
         {
+            enemy.GetComponent<Enemy>().setAI(blockAI);
             enemy.SetActive(true);
             //enemy.transform.position = newPosition;
             //newPosition.z++;

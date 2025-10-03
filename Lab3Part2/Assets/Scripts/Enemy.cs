@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.ConstrainedExecution;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -7,9 +8,14 @@ public class Enemy : MonoBehaviour
     Rigidbody rb;
     Vector3 velocity;
     public float speed;
+    private EnemySO type;
 
     public const float LIMIT_RIGHT = 15.0f;
     public const float LIMIT_LEFT = -15.0f;
+
+    public float radius = 1.0f;
+    public float angle = 0.0f;
+    private Vector3 target;
 
     public CharacterController controller;
 
@@ -27,10 +33,49 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        Move();
+        if (type != null)
+        {
+            switch(type.moveType)
+            {
+                case Movement.Block:
+                    BlockMove();
+                    break;
+                case Movement.Circular:
+                    CircularMove();
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     private void LateUpdate()
+    {
+        if (type != null)
+        {
+            switch (type.moveType)
+            {
+                case Movement.Block:
+                    BlockDirectionCheck();
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    public void setAI(EnemySO t_type)
+    {
+        type = t_type;
+    }
+
+    void BlockMove()
+    {
+        controller.Move(velocity);
+        velocity.z = 0.0f;
+    }
+
+    void BlockDirectionCheck()
     {
         if (transform.position.x <= LIMIT_LEFT)
         {
@@ -42,11 +87,6 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void Move()
-    {
-        controller.Move(velocity);
-        velocity.z = 0.0f;
-    }
     void ChangeMoveDirectionLeft()
     {
         velocity.z = -1.0f;
@@ -56,5 +96,20 @@ public class Enemy : MonoBehaviour
     {
         velocity.z = -1.0f;
         velocity.x = speed;
+    }
+
+
+    void CircularMove()
+    {
+        // x change is target + cos * radius
+        // z change is target + sin * radius
+        // angle change is speed * time
+
+
+    }
+
+    void setTarget(Vector3 t_target)
+    {
+        target = t_target;
     }
 }
