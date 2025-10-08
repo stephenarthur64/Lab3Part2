@@ -6,6 +6,9 @@ using UnityEngine;
 public class EnemyPool : MonoBehaviour
 {
     public EnemySO blockAI;
+    public EnemySO circleAI;
+
+    int waveCount = 1;
 
     public GameObject enemyPrefab;
     private int maxEnemies;
@@ -40,17 +43,40 @@ public class EnemyPool : MonoBehaviour
     void Update()
     {
     }
+    
+    IEnumerator SpawnDelay()
+    {
+        foreach (GameObject enemy in enemies)
+        {
+            yield return new WaitForSeconds(1.0f);
+            enemy.SetActive(true);
+        }
+    }
 
     void NewWave()
     {
+        waveCount++;
+
         Vector3 newPosition = new Vector3(0, 0, 0);
 
-        foreach(GameObject enemy in enemies)
+        if (waveCount == 1)
         {
-            enemy.GetComponent<Enemy>().setAI(blockAI);
-            enemy.SetActive(true);
-            //enemy.transform.position = newPosition;
-            //newPosition.z++;
+            foreach (GameObject enemy in enemies)
+            {
+                enemy.GetComponent<Enemy>().setAI(blockAI);
+                enemy.SetActive(true);
+            }
+        }
+
+        if (waveCount == 2)
+        {
+            foreach (GameObject enemy in enemies)
+            {
+                enemy.GetComponent<Enemy>().setAI(circleAI);
+                enemy.GetComponent<Enemy>().setTarget(CircleTarget.transform.position);
+            }
+
+            StartCoroutine(SpawnDelay());
         }
     }
 }

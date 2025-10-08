@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.ConstrainedExecution;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -13,9 +14,13 @@ public class Enemy : MonoBehaviour
     public const float LIMIT_RIGHT = 15.0f;
     public const float LIMIT_LEFT = -15.0f;
 
-    public float radius = 1.0f;
+    private float radius = 10.0f;
     public float angle = 0.0f;
     private Vector3 target;
+    private Vector3 transitionalTarget;
+    private bool transitionalMove = true;
+    private Vector3 staringPosition;
+    private float lerpTime;
 
     public CharacterController controller;
 
@@ -98,18 +103,42 @@ public class Enemy : MonoBehaviour
         velocity.x = speed;
     }
 
-
     void CircularMove()
     {
+        if (transitionalMove)
+        {
+            transform.position = Vector3.Lerp(staringPosition, transitionalTarget, lerpTime);
+            lerpTime += speed * Time.deltaTime;
+
+            if (transform.position == transitionalTarget)
+            {
+                transitionalMove = false;
+            }
+            return;
+        }
         // x change is target + cos * radius
         // z change is target + sin * radius
         // angle change is speed * time
 
+        Vector3 newPosition = new Vector3(0, 0, 0);
 
+        newPosition.x = target.x + Mathf.Cos(angle) * radius;
+        newPosition.y = transform.position.y;
+        newPosition.z = target.z + Mathf.Sin(angle) * radius;
+        angle += speed * Time.deltaTime;
+
+        transform.position = newPosition;
     }
 
-    void setTarget(Vector3 t_target)
+    public void setTarget(Vector3 t_target)
     {
+        staringPosition = t_target;
+        transform.position = t_target;
         target = t_target;
+        transitionalTarget.x = target.x + Mathf.Cos(0.0f) * radius;
+        transitionalTarget.y = transform.position.y;
+        transitionalTarget.z = target.z + Mathf.Sin(0.0f) * radius;
+        lerpTime = 0.0f;
+        speed = 2.0f;
     }
 }
