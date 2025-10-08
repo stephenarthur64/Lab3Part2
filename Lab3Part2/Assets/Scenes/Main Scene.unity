@@ -258,6 +258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6baf034262484da4d84e72a5fb701caf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blockAI: {fileID: 0}
   enemyPrefab: {fileID: 28889973707652380, guid: 55a57a25d4acfe54b89b56069fed19ae, type: 3}
   enemies:
   - {fileID: 0}
@@ -275,6 +276,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  CircleTarget: {fileID: 0}
 --- !u!4 &1617784964
 Transform:
   m_ObjectHideFlags: 0
