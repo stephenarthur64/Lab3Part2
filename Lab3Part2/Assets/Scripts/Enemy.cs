@@ -28,6 +28,8 @@ public class Enemy : MonoBehaviour
 
     public CharacterController controller;
 
+    PowerupManager powerup;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,7 +38,12 @@ public class Enemy : MonoBehaviour
         velocity = new Vector3(speed, 0.0f, 0.0f);
 
         EnemyManager.changeDirectionLeft.AddListener(ChangeMoveDirectionLeft);
-        EnemyManager.changeDirectionRight.AddListener(ChangeMoveDirectionRight);
+        EnemyManager.changeDirectionRight.AddListener(ChangeMoveDirectionRight); 
+    }
+
+    private void OnEnable()
+    {
+        powerup = GetComponentInChildren<PowerupManager>();
     }
 
     // Update is called once per frame
@@ -169,20 +176,25 @@ public class Enemy : MonoBehaviour
         lerpTime += speed * Time.deltaTime;
     }
 
-
     void DieCheck()
     {
         if (!gameObject.activeSelf)
         {
+            Debug.Log("dead");
+            if (powerup != null)
+            {
+                powerup.Spawn();
+            }
         }
     }
-
-
-    public void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        //if (collision.gameObject.tag == "")
+        if (other.tag == "Player")
+        {
+            gameObject.SetActive(false);
+        }
+
         DieCheck();
-        Debug.Log("dead");
     }
 }
 

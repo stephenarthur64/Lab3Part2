@@ -12,6 +12,7 @@ public class EnemyPool : MonoBehaviour
     int waveCount = 2;
 
     public GameObject enemyPrefab;
+    public GameObject powerupPrefab;
     private int maxEnemies;
     [SerializeField]
     GameObject[] enemies = new GameObject[1];
@@ -32,6 +33,7 @@ public class EnemyPool : MonoBehaviour
                 spawnPos.x = 0.0f;
             }
             enemies[i] = Instantiate(enemyPrefab, spawnPos, enemyPrefab.transform.rotation, transform);
+            SpawnPowerUp(enemies[i]);
             enemies[i].SetActive(false);
 
             spawnPos.x += 2.0f;
@@ -54,6 +56,15 @@ public class EnemyPool : MonoBehaviour
         }
     }
 
+    void SpawnPowerUp(GameObject t_enemy)
+    {
+        //Random.Range(0, 4) == 0
+        if (true)
+        {
+            Instantiate(powerupPrefab, t_enemy.transform);
+        }
+    }
+
     void NewWave()
     {
         waveCount++;
@@ -66,6 +77,7 @@ public class EnemyPool : MonoBehaviour
             {
                 enemy.GetComponent<Enemy>().setAI(blockAI);
                 enemy.SetActive(true);
+                SpawnPowerUp(enemy);
             }
         }
 
@@ -76,6 +88,7 @@ public class EnemyPool : MonoBehaviour
                 enemy.GetComponent<Enemy>().setAI(circleAI);
                 enemy.GetComponent<Enemy>().SetTarget(CircleTarget.transform.position);
                 enemy.GetComponent<Enemy>().InitCircleMovement();
+                SpawnPowerUp(enemy);
             }
 
             StartCoroutine(SpawnDelay());
@@ -87,6 +100,7 @@ public class EnemyPool : MonoBehaviour
             {
                 enemy.GetComponent<Enemy>().setAI(freeAI);
                 enemy.GetComponent<Enemy>().SetTarget(newPosition);
+                SpawnPowerUp(enemy);
             }
 
             StartCoroutine(SpawnDelay());

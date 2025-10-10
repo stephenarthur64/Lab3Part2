@@ -33,13 +33,13 @@ public class Bullet : MonoBehaviour
         StartCoroutine(Decay());
     }
 
-    public void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
         gameObject.SetActive(false);
 
         Health collidedHealth;
 
-        if (collision.gameObject.TryGetComponent<Health>(out collidedHealth))
+        if (other.gameObject.TryGetComponent<Health>(out collidedHealth))
         {
             collidedHealth.TakeDamage(stats.damage);
         }
