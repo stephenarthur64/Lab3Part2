@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc65a63dd36e7be4bb1b79d78a520191, type: 3}
   m_Name: EnemyFree
   m_EditorClassIdentifier: 
-  moveType: 0
-  health: 0
+  moveType: 3
+  health: 1

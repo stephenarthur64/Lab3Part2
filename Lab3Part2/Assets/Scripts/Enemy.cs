@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.ConstrainedExecution;
 using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Enemy : MonoBehaviour
 {
@@ -19,7 +21,7 @@ public class Enemy : MonoBehaviour
     private Vector3 target;
     private Vector3 transitionalTarget;
     private bool transitionalMove = true;
-    private Vector3 staringPosition;
+    private Vector3 startingPosition;
     private float lerpTime;
 
     public CharacterController controller;
@@ -47,6 +49,9 @@ public class Enemy : MonoBehaviour
                     break;
                 case Movement.Circular:
                     CircularMove();
+                    break;
+                case Movement.Free:
+                    FreeMove();
                     break;
                 default:
                     break;
@@ -107,7 +112,7 @@ public class Enemy : MonoBehaviour
     {
         if (transitionalMove)
         {
-            transform.position = Vector3.Lerp(staringPosition, transitionalTarget, lerpTime);
+            transform.position = Vector3.Lerp(startingPosition, transitionalTarget, lerpTime);
             lerpTime += speed * Time.deltaTime;
 
             if (transform.position == transitionalTarget)
@@ -132,7 +137,7 @@ public class Enemy : MonoBehaviour
 
     public void setTarget(Vector3 t_target)
     {
-        staringPosition = t_target;
+        startingPosition = t_target;
         transform.position = t_target;
         target = t_target;
         transitionalTarget.x = target.x + Mathf.Cos(0.0f) * radius;
@@ -141,4 +146,20 @@ public class Enemy : MonoBehaviour
         lerpTime = 0.0f;
         speed = 2.0f;
     }
+
+    void FreeMove()
+    {
+        if (transform.position == target)
+        {
+            target.x = Random.Range(-10.0f, 10.0f);
+            target.z = target.z + 2.0f;
+            startingPosition = transform.position;
+        }
+
+        transform.position = Vector3.Lerp(startingPosition, target, lerpTime);
+        lerpTime += speed * Time.deltaTime;
+    }
 }
+
+
+    
