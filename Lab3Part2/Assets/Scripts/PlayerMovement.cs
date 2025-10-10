@@ -21,6 +21,9 @@ public class PlayerMovement : MonoBehaviour
     private Gun[] guns;
     public BulletSO bulletType;
 
+    // Health
+    Health health;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +36,8 @@ public class PlayerMovement : MonoBehaviour
 
         fireAction = inputActionMap.FindAction("Fire");
         fireAction.Enable();
+
+        health = GetComponent<Health>();
     }
 
     void SetupGuns()
@@ -90,6 +95,26 @@ public class PlayerMovement : MonoBehaviour
         foreach (Gun gun in guns)
         {
             gun.Fire(bulletType);
+        }
+    }
+
+    public void GainPowerup(PowerupSO t_powerup)
+    {
+        health.Heal(t_powerup.healthChange);
+
+        bulletType.scale += t_powerup.scaleChange;
+        bulletType.damage += t_powerup.damageChange;
+        bulletType.fireRate += t_powerup.fireRateChange;
+
+        // Add guns
+        if (t_powerup.addGuns > 0)
+        {
+            for (int i = 0; i < t_powerup.addGuns; i++)
+            {
+                Instantiate(t_powerup.gunTypePrefab, transform);
+            }
+
+            SetupGuns();
         }
     }
 }

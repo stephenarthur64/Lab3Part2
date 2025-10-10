@@ -24,6 +24,8 @@ public class Bullet : MonoBehaviour
     public void Spawn(BulletSO t_stats, Transform t_spawnTransform)
     {
         stats = t_stats;
+        transform.localScale *= stats.scale;
+
         transform.SetPositionAndRotation(t_spawnTransform.position, t_spawnTransform.rotation);
         transform.forward = t_spawnTransform.forward;
 

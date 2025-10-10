@@ -9,7 +9,6 @@ public class Gun : MonoBehaviour
     private Transform firePos;
 
     private bool canShoot = true;
-    public float fireRate; // Time between shots
     public int size;
 
     // Start is called before the first frame update
@@ -35,18 +34,18 @@ public class Gun : MonoBehaviour
                 {
                     Bullet bulletScript = bullets[i].GetComponent<Bullet>();
                     bulletScript.Spawn(t_stats, firePos);
-                    StartCoroutine(ShootDelay());
+                    StartCoroutine(ShootDelay(t_stats.fireRate));
                     break;
                 }
             }
         }
     }
 
-    IEnumerator ShootDelay()
+    IEnumerator ShootDelay(float t_fireRate)
     {
         canShoot = false;
 
-        yield return new WaitForSeconds(fireRate);
+        yield return new WaitForSeconds(t_fireRate);
 
         canShoot = true;
     }

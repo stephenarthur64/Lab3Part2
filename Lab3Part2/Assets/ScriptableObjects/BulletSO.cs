@@ -6,6 +6,7 @@ using UnityEngine;
 public class BulletSO : ScriptableObject
 {
     public int damage;
+    [Min(0.01f)] public float fireRate;
     public float speed;
     public float scale = 1.0f;
 }
