@@ -24,6 +24,8 @@ public class Enemy : MonoBehaviour
     private Vector3 startingPosition;
     private float lerpTime;
 
+    public int dropItem;
+
     public CharacterController controller;
 
     // Start is called before the first frame update
@@ -165,6 +167,22 @@ public class Enemy : MonoBehaviour
 
         transform.position = Vector3.Lerp(startingPosition, target, lerpTime);
         lerpTime += speed * Time.deltaTime;
+    }
+
+
+    void DieCheck()
+    {
+        if (!gameObject.activeSelf)
+        {
+        }
+    }
+
+
+    public void OnCollisionEnter(Collision collision)
+    {
+        //if (collision.gameObject.tag == "")
+        DieCheck();
+        Debug.Log("dead");
     }
 }
 
