@@ -7,8 +7,9 @@ public class EnemyPool : MonoBehaviour
 {
     public EnemySO blockAI;
     public EnemySO circleAI;
+    public EnemySO freeAI;
 
-    int waveCount = 1;
+    int waveCount = 2;
 
     public GameObject enemyPrefab;
     private int maxEnemies;
@@ -20,7 +21,7 @@ public class EnemyPool : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Vector3 spawnPos = new Vector3(0.0f, 0.0f, 0.0f);
+        Vector3 spawnPos = new Vector3(0.0f, 0.0f, 2.0f);
 
         maxEnemies = enemies.Length;
         for (int i = 0; i < maxEnemies; i++)
@@ -57,7 +58,7 @@ public class EnemyPool : MonoBehaviour
     {
         waveCount++;
 
-        Vector3 newPosition = new Vector3(0, 0, 0);
+        Vector3 newPosition = new Vector3(0, 0, 10.0f);
 
         if (waveCount == 1)
         {
@@ -73,7 +74,19 @@ public class EnemyPool : MonoBehaviour
             foreach (GameObject enemy in enemies)
             {
                 enemy.GetComponent<Enemy>().setAI(circleAI);
-                enemy.GetComponent<Enemy>().setTarget(CircleTarget.transform.position);
+                enemy.GetComponent<Enemy>().SetTarget(CircleTarget.transform.position);
+                enemy.GetComponent<Enemy>().InitCircleMovement();
+            }
+
+            StartCoroutine(SpawnDelay());
+        }
+
+        if (waveCount == 3)
+        {
+            foreach (GameObject enemy in enemies)
+            {
+                enemy.GetComponent<Enemy>().setAI(freeAI);
+                enemy.GetComponent<Enemy>().SetTarget(newPosition);
             }
 
             StartCoroutine(SpawnDelay());

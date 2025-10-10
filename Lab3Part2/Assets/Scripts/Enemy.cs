@@ -135,11 +135,15 @@ public class Enemy : MonoBehaviour
         transform.position = newPosition;
     }
 
-    public void setTarget(Vector3 t_target)
+    public void SetTarget(Vector3 t_target)
     {
         startingPosition = t_target;
         transform.position = t_target;
         target = t_target;
+    }
+
+    public void InitCircleMovement()
+    {
         transitionalTarget.x = target.x + Mathf.Cos(0.0f) * radius;
         transitionalTarget.y = transform.position.y;
         transitionalTarget.z = target.z + Mathf.Sin(0.0f) * radius;
@@ -149,11 +153,14 @@ public class Enemy : MonoBehaviour
 
     void FreeMove()
     {
-        if (transform.position == target)
+        if (transform.position.z <= target.z)
         {
+            lerpTime = 0.0f;
+            speed = 0.5f;
             target.x = Random.Range(-10.0f, 10.0f);
-            target.z = target.z + 2.0f;
+            target.z = target.z - 2.0f;
             startingPosition = transform.position;
+            return;
         }
 
         transform.position = Vector3.Lerp(startingPosition, target, lerpTime);
