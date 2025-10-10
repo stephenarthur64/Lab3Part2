@@ -23,4 +23,10 @@ public class Health : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
+
+    public void Heal(int healAmount) 
+    { 
+        health += healAmount;
+    }
+
 }
