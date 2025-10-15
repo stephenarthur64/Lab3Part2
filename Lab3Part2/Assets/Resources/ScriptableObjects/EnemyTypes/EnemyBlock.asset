@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveType: 1
   health: 1
+  modifier: 1
+  damage: 10

@@ -149,8 +149,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.2
-  radius: 1
   angle: 0
+  dropItem: 0
   controller: {fileID: 0}
 --- !u!143 &2606984723505276160
 CharacterController:
@@ -190,4 +190,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b607a266696f0245af6f340f156ad91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 20

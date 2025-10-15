@@ -12,11 +12,12 @@ public class Enemy : MonoBehaviour
     Vector3 velocity;
     public float speed;
     private EnemySO type;
+    public GameManager gmRef;
 
     public const float LIMIT_RIGHT = 15.0f;
     public const float LIMIT_LEFT = -15.0f;
 
-    private float radius = 10.0f;
+    private float radius = 5.0f;
     public float angle = 0.0f;
     private Vector3 target;
     private Vector3 transitionalTarget;
@@ -137,7 +138,7 @@ public class Enemy : MonoBehaviour
         Vector3 newPosition = new Vector3(0, 0, 0);
 
         newPosition.x = target.x + Mathf.Cos(angle) * radius;
-        newPosition.y = transform.position.y;
+        newPosition.y = 0;
         newPosition.z = target.z + Mathf.Sin(angle) * radius;
         angle += speed * Time.deltaTime;
 
@@ -154,7 +155,7 @@ public class Enemy : MonoBehaviour
     public void InitCircleMovement()
     {
         transitionalTarget.x = target.x + Mathf.Cos(0.0f) * radius;
-        transitionalTarget.y = transform.position.y;
+        transitionalTarget.y = 0;
         transitionalTarget.z = target.z + Mathf.Sin(0.0f) * radius;
         lerpTime = 0.0f;
         speed = 2.0f;
@@ -181,6 +182,7 @@ public class Enemy : MonoBehaviour
         if (!gameObject.activeSelf)
         {
             Debug.Log("dead");
+            gmRef.ScoreUp(type.modifier);
             if (powerup != null)
             {
                 powerup.Spawn();

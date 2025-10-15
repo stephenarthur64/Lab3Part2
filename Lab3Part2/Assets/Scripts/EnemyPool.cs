@@ -9,7 +9,9 @@ public class EnemyPool : MonoBehaviour
     public EnemySO circleAI;
     public EnemySO freeAI;
 
-    int waveCount = 2;
+    int waveCount = 0;
+    private int activeCount;
+    private bool waveReady = true;
 
     public GameObject enemyPrefab;
     public GameObject powerupPrefab;
@@ -38,13 +40,24 @@ public class EnemyPool : MonoBehaviour
 
             spawnPos.x += 2.0f;
         }
-
-        NewWave();
     }
 
     // Update is called once per frame
     void Update()
     {
+        foreach (GameObject enemy in enemies)
+        {
+            if (!enemy.activeSelf)
+            {
+                activeCount++;
+            }
+        }
+        if (activeCount == maxEnemies && waveReady)
+        {
+            waveReady = false;
+            NewWave();
+        }
+        activeCount = 0;
     }
     
     IEnumerator SpawnDelay()
@@ -52,14 +65,15 @@ public class EnemyPool : MonoBehaviour
         foreach (GameObject enemy in enemies)
         {
             yield return new WaitForSeconds(1.0f);
+            waveReady = true;
             enemy.SetActive(true);
         }
     }
 
+
     void SpawnPowerUp(GameObject t_enemy)
     {
-        //Random.Range(0, 4) == 0
-        if (true)
+        if (Random.Range(0, 4) == 0)
         {
             Instantiate(powerupPrefab, t_enemy.transform);
         }
@@ -78,6 +92,7 @@ public class EnemyPool : MonoBehaviour
                 enemy.GetComponent<Enemy>().setAI(blockAI);
                 enemy.SetActive(true);
                 SpawnPowerUp(enemy);
+                waveReady = true;
             }
         }
 

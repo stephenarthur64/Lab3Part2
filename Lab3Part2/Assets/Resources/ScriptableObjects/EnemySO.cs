@@ -16,4 +16,6 @@ public class EnemySO : ScriptableObject
 {
     public Movement moveType;
     public int health;
+    public int modifier;
+    public int damage;
 }
