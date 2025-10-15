@@ -5,8 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "BulletData", menuName = "ScriptableObjects/BulletSO", order = 1)]
 public class BulletSO : ScriptableObject
 {
-    public int damage;
-    [Min(0.01f)] public float fireRate;
-    public float speed;
-    public float scale = 1.0f;
+    public int damage = 0;
+    [Min(0.01f)] public float fireRate = 0;
+    public float speed = 0;
+    public float scale = 0;
 }

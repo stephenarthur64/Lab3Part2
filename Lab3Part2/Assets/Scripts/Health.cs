@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
+    public int lives = 0;
     public int maxHealth;
     private int health;
+
+    private bool canTakeDamage = true;
+    public float invincibleTime;
 
     // Start is called before the first frame update
     void Awake()
@@ -15,12 +19,20 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        health -= damage;
-        Debug.Log("Damage Done: " +  damage);
-
-        if (health < 0)
+        if (canTakeDamage) 
         {
-            gameObject.SetActive(false);
+            health -= damage;
+            StartCoroutine(InvincibilityTimer());
+
+            if (health < 0)
+            {
+                gameObject.SetActive(false);
+
+                if (lives > 0)
+                {
+                    StartCoroutine(Respawn());
+                }
+            }
         }
     }
 
@@ -29,4 +41,20 @@ public class Health : MonoBehaviour
         health += healAmount;
     }
 
+    IEnumerator InvincibilityTimer()
+    {
+        canTakeDamage = false;
+
+        yield return new WaitForSeconds(invincibleTime);
+
+        canTakeDamage = true;
+    }
+
+    IEnumerator Respawn()
+    {
+        yield return new WaitForSeconds(invincibleTime);
+
+        health = maxHealth;
+        gameObject.SetActive(true);
+    }
 }

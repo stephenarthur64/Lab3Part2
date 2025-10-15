@@ -7,6 +7,7 @@ public class Gun : MonoBehaviour
     public GameObject bulletPrefab;
     private List<GameObject> bullets = new List<GameObject>();
     private Transform firePos;
+    BulletSO bulletStats;
 
     private bool canShoot = true;
     public int size;
@@ -22,9 +23,10 @@ public class Gun : MonoBehaviour
         }
 
         firePos = gameObject.GetComponent<Transform>();
+        bulletStats = ScriptableObject.CreateInstance<BulletSO>();
     }
 
-    public void Fire(BulletSO t_stats)
+    public void Fire(BulletSO t_originalStats, BulletSO t_modifiers)
     {
         if (canShoot)
         {
@@ -33,8 +35,13 @@ public class Gun : MonoBehaviour
                 if (!bullets[i].activeSelf)
                 {
                     Bullet bulletScript = bullets[i].GetComponent<Bullet>();
-                    bulletScript.Spawn(t_stats, firePos);
-                    StartCoroutine(ShootDelay(t_stats.fireRate));
+                    bulletStats.damage = t_originalStats.damage + t_modifiers.damage;
+                    bulletStats.fireRate = t_originalStats.fireRate + t_modifiers.fireRate;
+                    bulletStats.speed = t_originalStats.speed + t_modifiers.speed;
+                    bulletStats.scale = t_originalStats.scale * t_modifiers.scale;
+
+                    bulletScript.Spawn(bulletStats, firePos);
+                    StartCoroutine(ShootDelay(bulletStats.fireRate));
                     break;
                 }
             }

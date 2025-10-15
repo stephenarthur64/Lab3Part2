@@ -193,6 +193,12 @@ public class Enemy : MonoBehaviour
     {
         if (other.tag == "Player")
         {
+            Health playerHp = other.GetComponent<Health>();
+            if (playerHp != null)
+            {
+                playerHp.TakeDamage(10);
+            }
+
             gameObject.SetActive(false);
         }
 
