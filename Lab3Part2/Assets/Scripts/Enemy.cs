@@ -24,7 +24,11 @@ public class Enemy : MonoBehaviour
     private Vector3 startingPosition;
     private float lerpTime;
 
+    public int dropItem;
+
     public CharacterController controller;
+
+    PowerupManager powerup;
 
     // Start is called before the first frame update
     void Start()
@@ -34,7 +38,12 @@ public class Enemy : MonoBehaviour
         velocity = new Vector3(speed, 0.0f, 0.0f);
 
         EnemyManager.changeDirectionLeft.AddListener(ChangeMoveDirectionLeft);
-        EnemyManager.changeDirectionRight.AddListener(ChangeMoveDirectionRight);
+        EnemyManager.changeDirectionRight.AddListener(ChangeMoveDirectionRight); 
+    }
+
+    private void OnEnable()
+    {
+        powerup = GetComponentInChildren<PowerupManager>();
     }
 
     // Update is called once per frame
@@ -135,11 +144,15 @@ public class Enemy : MonoBehaviour
         transform.position = newPosition;
     }
 
-    public void setTarget(Vector3 t_target)
+    public void SetTarget(Vector3 t_target)
     {
         startingPosition = t_target;
         transform.position = t_target;
         target = t_target;
+    }
+
+    public void InitCircleMovement()
+    {
         transitionalTarget.x = target.x + Mathf.Cos(0.0f) * radius;
         transitionalTarget.y = transform.position.y;
         transitionalTarget.z = target.z + Mathf.Sin(0.0f) * radius;
@@ -149,15 +162,39 @@ public class Enemy : MonoBehaviour
 
     void FreeMove()
     {
-        if (transform.position == target)
+        if (transform.position.z <= target.z)
         {
+            lerpTime = 0.0f;
+            speed = 0.5f;
             target.x = Random.Range(-10.0f, 10.0f);
-            target.z = target.z + 2.0f;
+            target.z = target.z - 2.0f;
             startingPosition = transform.position;
+            return;
         }
 
         transform.position = Vector3.Lerp(startingPosition, target, lerpTime);
         lerpTime += speed * Time.deltaTime;
+    }
+
+    void DieCheck()
+    {
+        if (!gameObject.activeSelf)
+        {
+            Debug.Log("dead");
+            if (powerup != null)
+            {
+                powerup.Spawn();
+            }
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            gameObject.SetActive(false);
+        }
+
+        DieCheck();
     }
 }
 

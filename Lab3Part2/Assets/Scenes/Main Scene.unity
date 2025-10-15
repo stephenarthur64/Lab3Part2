@@ -260,7 +260,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blockAI: {fileID: 11400000, guid: 0e3d1ee483a857d43bdb6c460c9646e0, type: 2}
   circleAI: {fileID: 11400000, guid: 6a2bbd34890e67649a3c26cbea7a609d, type: 2}
+  freeAI: {fileID: 11400000, guid: 9e05cd8b0848b25478a73c0a1ba81526, type: 2}
   enemyPrefab: {fileID: 28889973707652380, guid: 55a57a25d4acfe54b89b56069fed19ae, type: 3}
+  powerupPrefab: {fileID: 3708221168084653764, guid: 43b54e1bcedc035418a882ab60d79c69, type: 3}
   enemies:
   - {fileID: 0}
   - {fileID: 0}

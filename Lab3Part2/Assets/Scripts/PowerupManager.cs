@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PowerupManager : MonoBehaviour
@@ -15,7 +16,7 @@ public class PowerupManager : MonoBehaviour
         rb = GetComponent<Rigidbody>();
 
         // Get all Powerups
-        allPowerups = Resources.LoadAll<PowerupSO>("Assets/ScriptableObjects/PowerupTypes");
+        allPowerups = Resources.LoadAll<PowerupSO>("ScriptableObjects/PowerupTypes");
         // Grab a SO from the powerup folder
         powerupEffect = allPowerups[Random.Range(0, allPowerups.Length)];
 
@@ -31,5 +32,12 @@ public class PowerupManager : MonoBehaviour
 
             player.GainPowerup(powerupEffect);
         }
+    }
+
+    public void Spawn()
+    {
+        transform.parent = null;
+        gameObject.SetActive(true);
+        Debug.Log("Powerup Spawned!");
     }
 }

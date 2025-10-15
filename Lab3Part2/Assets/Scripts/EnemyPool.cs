@@ -7,10 +7,12 @@ public class EnemyPool : MonoBehaviour
 {
     public EnemySO blockAI;
     public EnemySO circleAI;
+    public EnemySO freeAI;
 
-    int waveCount = 1;
+    int waveCount = 2;
 
     public GameObject enemyPrefab;
+    public GameObject powerupPrefab;
     private int maxEnemies;
     [SerializeField]
     GameObject[] enemies = new GameObject[1];
@@ -20,7 +22,7 @@ public class EnemyPool : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Vector3 spawnPos = new Vector3(0.0f, 0.0f, 0.0f);
+        Vector3 spawnPos = new Vector3(0.0f, 0.0f, 2.0f);
 
         maxEnemies = enemies.Length;
         for (int i = 0; i < maxEnemies; i++)
@@ -31,6 +33,7 @@ public class EnemyPool : MonoBehaviour
                 spawnPos.x = 0.0f;
             }
             enemies[i] = Instantiate(enemyPrefab, spawnPos, enemyPrefab.transform.rotation, transform);
+            SpawnPowerUp(enemies[i]);
             enemies[i].SetActive(false);
 
             spawnPos.x += 2.0f;
@@ -53,11 +56,20 @@ public class EnemyPool : MonoBehaviour
         }
     }
 
+    void SpawnPowerUp(GameObject t_enemy)
+    {
+        //Random.Range(0, 4) == 0
+        if (true)
+        {
+            Instantiate(powerupPrefab, t_enemy.transform);
+        }
+    }
+
     void NewWave()
     {
         waveCount++;
 
-        Vector3 newPosition = new Vector3(0, 0, 0);
+        Vector3 newPosition = new Vector3(0, 0, 10.0f);
 
         if (waveCount == 1)
         {
@@ -65,6 +77,7 @@ public class EnemyPool : MonoBehaviour
             {
                 enemy.GetComponent<Enemy>().setAI(blockAI);
                 enemy.SetActive(true);
+                SpawnPowerUp(enemy);
             }
         }
 
@@ -73,7 +86,21 @@ public class EnemyPool : MonoBehaviour
             foreach (GameObject enemy in enemies)
             {
                 enemy.GetComponent<Enemy>().setAI(circleAI);
-                enemy.GetComponent<Enemy>().setTarget(CircleTarget.transform.position);
+                enemy.GetComponent<Enemy>().SetTarget(CircleTarget.transform.position);
+                enemy.GetComponent<Enemy>().InitCircleMovement();
+                SpawnPowerUp(enemy);
+            }
+
+            StartCoroutine(SpawnDelay());
+        }
+
+        if (waveCount == 3)
+        {
+            foreach (GameObject enemy in enemies)
+            {
+                enemy.GetComponent<Enemy>().setAI(freeAI);
+                enemy.GetComponent<Enemy>().SetTarget(newPosition);
+                SpawnPowerUp(enemy);
             }
 
             StartCoroutine(SpawnDelay());
