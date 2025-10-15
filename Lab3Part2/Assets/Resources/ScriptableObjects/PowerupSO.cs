@@ -15,7 +15,7 @@ public class PowerupSO : ScriptableObject
 
     // Bullet
     public int damageChange;
-    [Min(0.1f)] public float scaleChange;
+    [Min(0.1f)] public float scaleMult = 1;
 
     // Player
     public int healthChange;

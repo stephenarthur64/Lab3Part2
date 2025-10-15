@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 813c47630aa344e4994a3294e3f679e7, type: 3}
   m_Name: DamageIncrease
   m_EditorClassIdentifier: 
+  material: {fileID: 0}
   fireRateChange: 0
-  addTurrets: 0
-  turretTypePrefab: {fileID: 0}
+  addGuns: 0
+  gunTypePrefab: {fileID: 0}
   damageChange: 1
-  scaleChange: 1.1
+  scaleMult: 1.05
   healthChange: 0

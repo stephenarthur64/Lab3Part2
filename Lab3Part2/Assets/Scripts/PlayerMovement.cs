@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     float gunSpread = 35f;
     private Gun[] guns;
     public BulletSO bulletType;
+    [SerializeField] private BulletSO bulletModifiers;
 
     // Health
     Health health;
@@ -38,6 +39,9 @@ public class PlayerMovement : MonoBehaviour
         fireAction.Enable();
 
         health = GetComponent<Health>();
+
+        bulletModifiers = ScriptableObject.CreateInstance<BulletSO>();
+        bulletModifiers.scale = 1.0f;
     }
 
     void SetupGuns()
@@ -94,7 +98,7 @@ public class PlayerMovement : MonoBehaviour
     {
         foreach (Gun gun in guns)
         {
-            gun.Fire(bulletType);
+            gun.Fire(bulletType, bulletModifiers);
         }
     }
 
@@ -102,9 +106,9 @@ public class PlayerMovement : MonoBehaviour
     {
         health.Heal(t_powerup.healthChange);
 
-        bulletType.scale += t_powerup.scaleChange;
-        bulletType.damage += t_powerup.damageChange;
-        bulletType.fireRate += t_powerup.fireRateChange;
+        bulletModifiers.scale *= t_powerup.scaleMult;
+        bulletModifiers.damage += t_powerup.damageChange;
+        bulletModifiers.fireRate += t_powerup.fireRateChange;
 
         // Add guns
         if (t_powerup.addGuns > 0)

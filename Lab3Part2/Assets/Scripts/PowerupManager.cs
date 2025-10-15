@@ -5,15 +5,16 @@ using UnityEngine;
 
 public class PowerupManager : MonoBehaviour
 {
-    private Rigidbody rb;
+    private CharacterController characterController;
 
     private PowerupSO powerupEffect;
     private static PowerupSO[] allPowerups;
+    public float speed = 1.0f;
 
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        characterController = GetComponent<CharacterController>();
 
         // Get all Powerups
         allPowerups = Resources.LoadAll<PowerupSO>("ScriptableObjects/PowerupTypes");
@@ -22,15 +23,27 @@ public class PowerupManager : MonoBehaviour
 
         // Set the powerup's color
         GetComponent<Renderer>().material = powerupEffect.material;
+
+        gameObject.SetActive(false);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player")
         {
-            PlayerMovement player = collision.gameObject.GetComponent<PlayerMovement>();
+            PlayerMovement player = other.gameObject.GetComponent<PlayerMovement>();
 
             player.GainPowerup(powerupEffect);
+            Destroy(gameObject);
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (gameObject.activeSelf)
+        {
+            Vector3 velocity = new Vector3(0, 0, -speed);
+            characterController.Move(velocity);
         }
     }
 
