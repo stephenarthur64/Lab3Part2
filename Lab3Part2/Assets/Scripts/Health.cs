@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Health : MonoBehaviour
 {
@@ -25,7 +26,7 @@ public class Health : MonoBehaviour
     public int GetHealth() { return health; }
     public void TakeDamage(int damage)
     {
-        if (canTakeDamage) 
+        if (canTakeDamage && alive) 
         {
             health -= damage;
             StartCoroutine(InvincibilityTimer());
@@ -33,6 +34,7 @@ public class Health : MonoBehaviour
             if (health < 0)
             {
                 alive = false;
+                lives--;
 
                 if (lives > 0)
                 {
@@ -41,6 +43,7 @@ public class Health : MonoBehaviour
                 else
                 {
                     alive = false;
+                    gameObject.SetActive(false);
                 }
             }
         }
@@ -62,15 +65,20 @@ public class Health : MonoBehaviour
 
     IEnumerator Respawn()
     {
+        MeshRenderer mesh = GetComponentInChildren<MeshRenderer>();
+        mesh.gameObject.SetActive(false);
         yield return new WaitForSeconds(respawnTime);
 
         health = maxHealth;
         alive = true;
         canTakeDamage = true;
+        mesh.gameObject.SetActive(true);
     }
 
     public void AllowDamage()
     {
+        lives = 0;
+        alive = true;
         canTakeDamage = true;
     }
 }

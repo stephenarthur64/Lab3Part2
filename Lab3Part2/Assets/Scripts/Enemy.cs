@@ -104,8 +104,8 @@ public class Enemy : MonoBehaviour
     public void Respawn()
     {
         gameObject.SetActive(true);
+        GetComponentInChildren<MeshRenderer>().gameObject.SetActive(true);
         health.AllowDamage();
-
     }
     public void setAI(EnemySO t_type)
     {
