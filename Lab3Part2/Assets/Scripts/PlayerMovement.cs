@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     public float speed;
     private Vector3 velocity = new Vector3();
 
+    private Mesh mesh;
     private CharacterController character;
 
     [SerializeField] private InputActionAsset controls;
@@ -103,6 +104,11 @@ public class PlayerMovement : MonoBehaviour
         if (fireAction.IsPressed())
         {
             Shoot();
+        }
+
+        if (!health.IsAlive())
+        {
+            
         }
     }
 

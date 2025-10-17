@@ -19,6 +19,8 @@ public class Health : MonoBehaviour
         health = maxHealth;
     }
 
+    public bool IsAlive() {  return alive; }
+
     public int GetLives() { return lives; }
     public int GetHealth() { return health; }
     public void TakeDamage(int damage)
