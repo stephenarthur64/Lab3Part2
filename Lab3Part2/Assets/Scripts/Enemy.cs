@@ -52,6 +52,7 @@ public class Enemy : MonoBehaviour
     private void OnEnable()
     {
         powerup = GetComponentInChildren<PowerupManager>();
+        gun.RestartShoot();
     }
 
     // Update is called once per frame

@@ -13,6 +13,7 @@ public class Gun : MonoBehaviour
     public int size;
 
     public bool CanShoot() { return canShoot; }
+    public void RestartShoot() { canShoot = true; }
 
     // Start is called before the first frame update
     void Start()
