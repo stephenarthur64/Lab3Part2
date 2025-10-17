@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI livesText;
-    int score = 0;
+    static int score = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
         scoreText.text = "Score: " + scoreText.ToString();
     }
 
-    public void ScoreUp(int modifier)
+    public static void ScoreUp(int modifier)
     {
         score += 100 * modifier;
     }

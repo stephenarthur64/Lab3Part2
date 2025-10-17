@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 813c47630aa344e4994a3294e3f679e7, type: 3}
   m_Name: GunPlus1
   m_EditorClassIdentifier: 
-  material: {fileID: 0}
+  material: {fileID: 2100000, guid: 7d42bb86b84215a4bb9a7105a56b4f60, type: 2}
   fireRateChange: 0
-  addGuns: 0
-  gunTypePrefab: {fileID: 0}
+  addGuns: 1
+  gunTypePrefab: {fileID: 7847107220355156160, guid: 965db0a2dfdbb0d41a3eb1ddb85de964, type: 3}
   damageChange: 0
   scaleMult: 1
   healthChange: 0

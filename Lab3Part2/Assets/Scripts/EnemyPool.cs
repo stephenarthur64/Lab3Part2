@@ -66,7 +66,7 @@ public class EnemyPool : MonoBehaviour
         {
             yield return new WaitForSeconds(1.0f);
             waveReady = true;
-            enemy.SetActive(true);
+            enemy.GetComponent<Enemy>().Respawn();
         }
     }
 
@@ -90,7 +90,7 @@ public class EnemyPool : MonoBehaviour
             foreach (GameObject enemy in enemies)
             {
                 enemy.GetComponent<Enemy>().setAI(blockAI);
-                enemy.SetActive(true);
+                enemy.GetComponent<Enemy>().Respawn();
                 SpawnPowerUp(enemy);
                 waveReady = true;
             }

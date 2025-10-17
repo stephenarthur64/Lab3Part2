@@ -12,7 +12,6 @@ public class Enemy : MonoBehaviour
     Vector3 velocity;
     public float speed;
     private EnemySO type;
-    public GameManager gmRef;
 
     public const float LIMIT_RIGHT = 15.0f;
     public const float LIMIT_LEFT = -15.0f;
@@ -28,14 +27,16 @@ public class Enemy : MonoBehaviour
     public int dropItem;
 
     public CharacterController controller;
+    private Health health;
 
     PowerupManager powerup;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         rb = GetComponent<Rigidbody>();
         controller = GetComponent<CharacterController>();
+        health = GetComponent<Health>();
         velocity = new Vector3(speed, 0.0f, 0.0f);
 
         EnemyManager.changeDirectionLeft.AddListener(ChangeMoveDirectionLeft);
@@ -84,6 +85,12 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public void Respawn()
+    {
+        gameObject.SetActive(true);
+        health.AllowDamage();
+
+    }
     public void setAI(EnemySO t_type)
     {
         type = t_type;
@@ -182,7 +189,7 @@ public class Enemy : MonoBehaviour
         if (!gameObject.activeSelf)
         {
             Debug.Log("dead");
-            gmRef.ScoreUp(type.modifier);
+            GameManager.ScoreUp(type.modifier);
             if (powerup != null)
             {
                 powerup.Spawn();

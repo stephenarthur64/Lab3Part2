@@ -56,5 +56,11 @@ public class Health : MonoBehaviour
 
         health = maxHealth;
         gameObject.SetActive(true);
+        canTakeDamage = true;
+    }
+
+    public void AllowDamage()
+    {
+        canTakeDamage = true;
     }
 }
