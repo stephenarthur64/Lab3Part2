@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 813c47630aa344e4994a3294e3f679e7, type: 3}
   m_Name: IncreaseFireRate
   m_EditorClassIdentifier: 
-  material: {fileID: 2100000, guid: 9711bc5ec56f2fc4d9a65417dbb47197, type: 2}
+  material: {fileID: 2100000, guid: 1d9eb8a11bc414148bd606b106aada03, type: 2}
   fireRateChange: -0.05
   addGuns: 0
   gunTypePrefab: {fileID: 0}
