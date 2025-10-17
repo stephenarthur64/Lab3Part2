@@ -44,6 +44,9 @@ public class PlayerMovement : MonoBehaviour
         bulletModifiers.scale = 1.0f;
     }
 
+    public BulletSO GetModifiers() { return bulletModifiers; }
+    public int GetGunAmount() { return guns.Length; }
+
     void SetupGuns()
     {
         guns = GetComponentsInChildren<Gun>();
