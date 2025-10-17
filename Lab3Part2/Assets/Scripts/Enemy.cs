@@ -31,16 +31,22 @@ public class Enemy : MonoBehaviour
 
     PowerupManager powerup;
 
+    // Shooting
+    Gun gun;
+    public BulletSO bulletStats;
+
     // Start is called before the first frame update
     void Awake()
     {
+        gun = GetComponentInChildren<Gun>();
         rb = GetComponent<Rigidbody>();
         controller = GetComponent<CharacterController>();
         health = GetComponent<Health>();
         velocity = new Vector3(speed, 0.0f, 0.0f);
 
         EnemyManager.changeDirectionLeft.AddListener(ChangeMoveDirectionLeft);
-        EnemyManager.changeDirectionRight.AddListener(ChangeMoveDirectionRight); 
+        EnemyManager.changeDirectionRight.AddListener(ChangeMoveDirectionRight);
+
     }
 
     private void OnEnable()
@@ -67,6 +73,15 @@ public class Enemy : MonoBehaviour
                 default:
                     break;
             }
+        }
+
+        // Shoot if it can
+        if (gun.CanShoot())
+        {
+            // Randomize fireRate
+            float fireRate = Random.Range(0.75f, 3.0f);
+            bulletStats.fireRate = fireRate;
+            gun.Fire(bulletStats);
         }
     }
 

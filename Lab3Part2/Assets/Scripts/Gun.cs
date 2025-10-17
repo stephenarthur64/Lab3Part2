@@ -12,6 +12,8 @@ public class Gun : MonoBehaviour
     private bool canShoot = true;
     public int size;
 
+    public bool CanShoot() { return canShoot; }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,6 +41,30 @@ public class Gun : MonoBehaviour
                     bulletStats.fireRate = t_originalStats.fireRate + t_modifiers.fireRate;
                     bulletStats.speed = t_originalStats.speed + t_modifiers.speed;
                     bulletStats.scale = t_originalStats.scale * t_modifiers.scale;
+
+                    bulletScript.Spawn(bulletStats, firePos);
+                    StartCoroutine(ShootDelay(bulletStats.fireRate));
+                    Debug.Log(t_originalStats.fireRate + " + " + t_modifiers.fireRate);
+                    Debug.Log("New fireRate: " + bulletStats.fireRate);
+                    break;
+                }
+            }
+        }
+    }
+
+    public void Fire(BulletSO t_bulletStats)
+    {
+        if (canShoot)
+        {
+            for (int i = 0; i < size; i++)
+            {
+                if (!bullets[i].activeSelf)
+                {
+                    Bullet bulletScript = bullets[i].GetComponent<Bullet>();
+                    bulletStats.damage = t_bulletStats.damage;
+                    bulletStats.fireRate = t_bulletStats.fireRate;
+                    bulletStats.speed = t_bulletStats.speed;
+                    bulletStats.scale = t_bulletStats.scale;
 
                     bulletScript.Spawn(bulletStats, firePos);
                     StartCoroutine(ShootDelay(bulletStats.fireRate));

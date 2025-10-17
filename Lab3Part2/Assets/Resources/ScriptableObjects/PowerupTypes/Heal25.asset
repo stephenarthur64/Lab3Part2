@@ -9,10 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3523647dcbb0fa247b5a5860948796f8, type: 3}
-  m_Name: Basic Bullet
+  m_Script: {fileID: 11500000, guid: 813c47630aa344e4994a3294e3f679e7, type: 3}
+  m_Name: Heal25
   m_EditorClassIdentifier: 
-  damage: 10
-  fireRate: 0.25
-  speed: 500
-  scale: 0.4
+  material: {fileID: 2100000, guid: 8f00a3e3932b109468eec8eee4769720, type: 2}
+  fireRateChange: 0
+  addGuns: 0
+  gunTypePrefab: {fileID: 0}
+  damageChange: 0
+  scaleMult: 1
+  healthChange: 25

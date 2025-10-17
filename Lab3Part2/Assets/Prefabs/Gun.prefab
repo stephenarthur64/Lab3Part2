@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 7847107220355156160}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -1.5, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -45,5 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 2279942524104206860, guid: 779f05f0f3599fd40a17b76c2772776d, type: 3}
-  fireRate: 0.1
   size: 100

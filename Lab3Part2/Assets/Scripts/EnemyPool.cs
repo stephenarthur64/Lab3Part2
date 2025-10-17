@@ -73,7 +73,7 @@ public class EnemyPool : MonoBehaviour
 
     void SpawnPowerUp(GameObject t_enemy)
     {
-        if (Random.Range(0, 4) == 0)
+        if (Random.Range(0, 3) == 0)
         {
             Instantiate(powerupPrefab, t_enemy.transform);
         }

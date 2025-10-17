@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
+    bool alive = true;
     public int lives = 0;
+    public float respawnTime;
     public int maxHealth;
     private int health;
 
@@ -28,11 +30,15 @@ public class Health : MonoBehaviour
 
             if (health < 0)
             {
-                gameObject.SetActive(false);
+                alive = false;
 
                 if (lives > 0)
                 {
                     StartCoroutine(Respawn());
+                }
+                else
+                {
+                    alive = false;
                 }
             }
         }
@@ -54,10 +60,10 @@ public class Health : MonoBehaviour
 
     IEnumerator Respawn()
     {
-        yield return new WaitForSeconds(invincibleTime);
+        yield return new WaitForSeconds(respawnTime);
 
         health = maxHealth;
-        gameObject.SetActive(true);
+        alive = true;
         canTakeDamage = true;
     }
 

@@ -14,10 +14,12 @@ public class GameManager : MonoBehaviour
     int lives = 0;
     int health = 0;
 
+    private BulletSO bulletStats;
+
     // Start is called before the first frame update
     void Start()
     {
-
+        bulletStats = ScriptableObject.CreateInstance<BulletSO>();
     }
 
     // Update is called once per frame
@@ -34,18 +36,16 @@ public class GameManager : MonoBehaviour
 
     void updateStats()
     {
-        int damage, gunAmount = 0;
-        float fireRate, speed, scale = 0.0f;
-        damage = playerRef.GetComponent<PlayerMovement>().GetModifiers().damage;
-        fireRate = playerRef.GetComponent<PlayerMovement>().GetModifiers().fireRate;
-        speed = playerRef.GetComponent<PlayerMovement>().GetModifiers().speed;
-        scale = playerRef.GetComponent<PlayerMovement>().GetModifiers().scale;
-        gunAmount = playerRef.GetComponent<PlayerMovement>().GetGunAmount();
+        bulletStats.damage = playerRef.GetComponent<PlayerMovement>().GetStats().damage;
+        bulletStats.fireRate = playerRef.GetComponent<PlayerMovement>().GetStats().fireRate;
+        bulletStats.speed = playerRef.GetComponent<PlayerMovement>().GetStats().speed;
+        bulletStats.scale = playerRef.GetComponent<PlayerMovement>().GetStats().scale;
+        int gunAmount = playerRef.GetComponent<PlayerMovement>().GetGunAmount();
 
-        statsText.text = "Stats:\nDamage: " + damage.ToString()
-            + "\nFire Rate: " + fireRate.ToString()
-            + "\nSpeed: " + speed.ToString()
-            + "\nScale: " + scale.ToString()
+        statsText.text = "Stats:\nDamage: " + bulletStats.damage.ToString()
+            + "\nFire Rate: " + bulletStats.fireRate.ToString()
+            + "\nSpeed: " + bulletStats.speed.ToString()
+            + "\nScale: " + bulletStats.scale.ToString()
             + "\nGuns: " + gunAmount.ToString();
     }
 

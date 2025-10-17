@@ -9,7 +9,7 @@ public class PowerupSO : ScriptableObject
     public Material material;
 
     // Guns
-    public int fireRateChange;
+    public float fireRateChange;
     [Min(0)] public int addGuns;
     public GameObject gunTypePrefab = null;
 

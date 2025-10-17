@@ -44,7 +44,16 @@ public class PlayerMovement : MonoBehaviour
         bulletModifiers.scale = 1.0f;
     }
 
-    public BulletSO GetModifiers() { return bulletModifiers; }
+    public BulletSO GetStats() 
+    {
+        BulletSO combinedStats = ScriptableObject.CreateInstance<BulletSO>();
+        combinedStats.damage = bulletType.damage + bulletModifiers.damage;
+        combinedStats.fireRate = bulletType.fireRate + bulletModifiers.fireRate;
+        combinedStats.speed = bulletType.speed + bulletModifiers.speed;
+        combinedStats.scale = bulletType.scale * bulletModifiers.scale;
+
+        return combinedStats; 
+    }
     public int GetGunAmount() { return guns.Length; }
 
     void SetupGuns()
