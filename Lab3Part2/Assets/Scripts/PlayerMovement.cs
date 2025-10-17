@@ -99,16 +99,14 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        character.Move(velocity);
-
-        if (fireAction.IsPressed())
+        if (health.IsAlive())
         {
-            Shoot();
-        }
+            character.Move(velocity);
 
-        if (!health.IsAlive())
-        {
-            
+            if (fireAction.IsPressed())
+            {
+                Shoot();
+            }
         }
     }
 
