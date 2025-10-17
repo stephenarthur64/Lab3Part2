@@ -2,9 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
+    public static UnityEvent shootSound;
+    public static UnityEvent dieSound;
+
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI livesText;
     public TextMeshProUGUI healthText;
@@ -20,6 +24,16 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         bulletStats = ScriptableObject.CreateInstance<BulletSO>();
+
+        if (shootSound == null)
+        {
+            shootSound = new UnityEvent();
+        }
+
+        if (dieSound == null)
+        {
+            dieSound = new UnityEvent();
+        }
     }
 
     // Update is called once per frame

@@ -23,6 +23,7 @@ public class Bullet : MonoBehaviour
 
     public void Spawn(BulletSO t_stats, Transform t_spawnTransform)
     {
+        GameManager.shootSound.Invoke();
         stats = t_stats;
         transform.localScale = new Vector3(stats.scale, stats.scale, stats.scale);
 
