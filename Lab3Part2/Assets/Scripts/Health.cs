@@ -44,6 +44,7 @@ public class Health : MonoBehaviour
                 {
                     alive = false;
                     gameObject.SetActive(false);
+                    GameManager.dieSound.Invoke();
                 }
             }
         }

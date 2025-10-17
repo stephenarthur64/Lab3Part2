@@ -9,6 +9,9 @@ public class GameManager : MonoBehaviour
     public static UnityEvent shootSound;
     public static UnityEvent dieSound;
 
+    public AudioSource shoot;
+    public AudioSource die;
+
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI livesText;
     public TextMeshProUGUI healthText;
@@ -34,6 +37,19 @@ public class GameManager : MonoBehaviour
         {
             dieSound = new UnityEvent();
         }
+
+        shootSound.AddListener(PlayShoot);
+        dieSound.AddListener(PlayDie);
+    }
+
+    void PlayShoot()
+    {
+        shoot.Play();
+    }
+
+    void PlayDie()
+    {
+        die.Play();
     }
 
     // Update is called once per frame
